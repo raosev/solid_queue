@@ -111,7 +111,11 @@ module SolidQueue
 
       private
         def ready
-          ReadyExecution.create_or_find_by!(job_id: id)
+          50.times do
+            tmp = ReadyExecution.create_or_find_by!(job_id: id)
+            return tmp
+          rescue ::ActiveRecord::Deadlocked
+          end
         end
 
         def execution
