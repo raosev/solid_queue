@@ -116,6 +116,8 @@ module SolidQueue
             return tmp
           rescue ::ActiveRecord::Deadlocked
           end
+
+          ReadyExecution.create_or_find_by!(job_id: id)
         end
 
         def execution
